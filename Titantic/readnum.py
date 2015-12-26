@@ -1,0 +1,29 @@
+import numpy as np
+import pandas as pd
+#read data from train.csv
+df = pd.read_csv('train.csv',header=0)
+#    show the property of the number
+#df.describe()
+#show the female and male survived number to prove that  female are inclined to surviving
+#x=[df[(df.Sex=='male')]['Sex'].size,df[(df.Sex=='female')]['Sex'].size]
+#y=[df[(df.Sex=='male') & (df.Survived == 1)]['Sex'].size,\
+#        df[(df.Sex=='female') & (df.Survived == 1)]['Sex'].size]
+#print 'male number:'+str(x[0])+'    '+'female number:'+str(x[1])
+#print 'male survive:'+str(y[0])+'   '+'female survive:'+str(y[1])
+#replace missing values with mode
+df.Embarked[df.Embarked.isnull()] = df.Embarked.dropna().mode().values
+#replace missing values with U0
+df.Cabin[df.Cabin.isnull()]='U0'
+#choose training data to predict age
+    
+    
+    
+    
+    
+#use RandomForestRegressor to train data
+    
+    
+    
+    
+    
+    

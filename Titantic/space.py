@@ -1,0 +1,21 @@
+import pandas as pd
+import numpy as np
+import time
+import csv
+from sklearn.grid_search import GridSearchCV
+from sklearn.grid_search import RandomizedSearchCV
+from sklearn.ensemble import RandomForestRegressor
+import matplotlib.pyplot as plt
+df = pd.read_csv('train.csv',header=0)
+df.loc[(df.Embarked.isnull()),'Embarked'] = df.Embarked.dropna().mode().values
+df.loc[(df.Cabin.isnull()),'Cabin'] = 'U0'
+age_df = df[['Age','Survived','Fare','Parch','SibSp','Pclass']]
+age_df_notnull = age_df.loc[(df.Age.notnull())]
+age_df_isnull = age_df.loc[(df.Age.isnull())]
+X = age_df_notnull.values[:,1:]
+Y = age_df_notnull.values[:,0]
+rfr = RandomForestRegressor(n_estimators=1000,n_jobs=-1)
+rfr.fit(X,Y)
+predictAges = rfr.predict(age_df_isnull.values[:,1:])
+df.loc[(df.Age.isnull()),'Age'] = predictAges
+df.info()
